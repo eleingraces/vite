@@ -26,7 +26,9 @@ jobs:
       run: npx cypress install
     
     - name: Start the server for frontend testing
-      run: node server.js
+      run: |
+        node server.js
+        npx wait-on http://localhost:3100
 
     - name: To start on local machine
       run: npm run start   
