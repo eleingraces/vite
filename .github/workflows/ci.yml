@@ -31,7 +31,9 @@ jobs:
         npx wait-on http://localhost:3100
 
     - name: To start on local machine
-      run: npm run start   
+      run: |
+        npm run start &
+        npx wait-on http://localhost:3001  
 
     - name: Run my custom script
       run: npm cypress:run:headless
