@@ -1,0 +1,15 @@
+name: Run Vite Automation Script
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Run my custom script
+      run: bash ./scripts/myscript.sh
