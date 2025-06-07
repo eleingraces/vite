@@ -24,6 +24,12 @@ jobs:
 
     - name: Install Cypress binary
       run: npx cypress install
+    
+    - name: Start the server for frontend testing
+      run: node server.js
+
+    - name: To start on local machine
+      run: npm run start   
 
     - name: Run my custom script
-      run: npx cypress run --spec "cypress/e2e/front-end.cy.js"
+      run: npm cypress:run:headless
