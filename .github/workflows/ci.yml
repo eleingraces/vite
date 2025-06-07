@@ -19,12 +19,30 @@ jobs:
       with:
         node-version: '18'  # adjust to project version
 
+    - name: Cache node modules
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.npm
+          node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
+    - name: Cache Cypress binary
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/Cypress
+        key: ${{ runner.os }}-cypress-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-cypress-
+
     - name: Install dependencies
       run: npm install
 
     - name: Install Cypress binary
       run: npx cypress install
-    
+
     - name: Start backend and frontend servers and run script
       run: |
         node server.js &
