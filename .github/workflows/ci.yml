@@ -3,13 +3,27 @@ name: Run Vite Automation Script
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'  # adjust to your project version
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Install Cypress binary
+      run: npx cypress install
 
     - name: Run my custom script
       run: npx cypress run --spec "cypress/e2e/front-end.cy.js"
