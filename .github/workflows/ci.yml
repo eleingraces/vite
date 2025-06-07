@@ -28,12 +28,20 @@ jobs:
     - name: Start the server for frontend testing
       run: |
         node server.js &
+        BACKEND_PID=$!
         npx wait-on http://localhost:3100
 
     - name: To start on local machine
       run: |
         npm run start &
+        FRONTEND_PID=$!
         npx wait-on http://localhost:3001  
 
     - name: Run my custom script
       run: npm run cypress:run:headless
+
+    - name: Clean up background servers
+      if: always()
+      run: |
+        kill $BACKEND_PID || true
+        kill $FRONTEND_PID || true
